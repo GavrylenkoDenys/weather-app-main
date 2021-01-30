@@ -37,23 +37,12 @@ function getFetch(cityName) {
 
       flex.prepend(...iconData);
       humidity.textContent = `Humidity: ${data.main.humidity}%`;
-      wind.textContent = `Wind speed: ${data.wind.speed} km/h`;
-    })
-    .catch((error) => {
-      console.error(`Ёпта, поломалось`, error);
-      return result;
+      wind.textContent = `Wind speed: ${data.wind.speed} km/h ${data.wind.deg}°`;
     });
+  return result;
 }
 
 const { input, inputBtn } = refs;
-
-inputBtn.addEventListener("click", () => {
-  if (!query) return;
-  let query = input.value;
-  console.log(query);
-  getFetch(query);
-  input.value = "";
-});
 
 input.addEventListener("keyup", (evt) => {
   let query = input.value;
@@ -63,4 +52,11 @@ input.addEventListener("keyup", (evt) => {
     getFetch(query);
     input.value = "";
   }
+  inputBtn.addEventListener("click", () => {
+    let query = input.value;
+    console.log(query);
+    if (!query) return;
+    getFetch(query);
+    input.value = "";
+  });
 });
